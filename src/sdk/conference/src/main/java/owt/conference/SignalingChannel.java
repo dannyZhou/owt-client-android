@@ -187,8 +187,8 @@ final class SignalingChannel {
             opt.reconnectionAttempts = MAX_RECONNECT_ATTEMPTS;
             opt.secure = isSecure;
             OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-            if (configuration.sslContext != null) {
-                clientBuilder.sslSocketFactory(configuration.sslContext.getSocketFactory());
+            if (configuration.socketFactory != null) {
+                clientBuilder.sslSocketFactory(configuration.socketFactory);
             }
             if (configuration.hostnameVerifier != null) {
                 clientBuilder.hostnameVerifier(configuration.hostnameVerifier);

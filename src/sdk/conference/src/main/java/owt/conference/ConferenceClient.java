@@ -885,6 +885,8 @@ public final class ConferenceClient implements SignalingChannel.SignalingChannel
             msg.put("signaling", sdpObj);
 
             sendSignalingMessage("soac", msg, null);
+
+            Log.d("ConferenceClient-sdp", sdp.description);
         } catch (JSONException e) {
             DCHECK(e);
         }

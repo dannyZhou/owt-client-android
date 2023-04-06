@@ -10,6 +10,8 @@ import org.webrtc.PeerConnection;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 
 /**
  * Configuration for ConferenceClient.
@@ -18,6 +20,7 @@ public final class ConferenceClientConfiguration extends ClientConfiguration {
 
     SSLContext sslContext = null;
     HostnameVerifier hostnameVerifier = null;
+    SSLSocketFactory socketFactory = null;
 
     private ConferenceClientConfiguration(PeerConnection.RTCConfiguration configuration) {
         super(configuration);
@@ -39,6 +42,7 @@ public final class ConferenceClientConfiguration extends ClientConfiguration {
         private SSLContext sslContext = null;
         private HostnameVerifier hostnameVerifier = null;
         private PeerConnection.RTCConfiguration rtcConfiguration = null;
+        private SSLSocketFactory socketFactory;
 
         Builder() {
         }
@@ -86,7 +90,13 @@ public final class ConferenceClientConfiguration extends ClientConfiguration {
                     new ConferenceClientConfiguration(rtcConfiguration);
             configuration.sslContext = sslContext;
             configuration.hostnameVerifier = hostnameVerifier;
+            configuration.socketFactory = socketFactory;
             return configuration;
+        }
+
+        public Builder setSocketFactory(SSLSocketFactory socketFactory) {
+            this.socketFactory = socketFactory;
+            return this;
         }
     }
 }
