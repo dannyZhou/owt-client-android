@@ -15,6 +15,7 @@ public class AudioEncodingParameters {
      * *NOTE* currently setting different bitrates for different audio codecs is not supported.
      */
     public static int maxBitrate = 0;
+    public static int minBitrate = 0;
     /**
      * Audio codec.
      */
@@ -35,5 +36,13 @@ public class AudioEncodingParameters {
         RCHECK(maxBitrateKbps > 0);
         this.codec = audioCodecParameters;
         maxBitrate = maxBitrateKbps;
+    }
+    public AudioEncodingParameters(AudioCodecParameters audioCodecParameters, int maxBitrateKbps, int minBitrateKbps) {
+        RCHECK(audioCodecParameters);
+        RCHECK(maxBitrateKbps > 0);
+        RCHECK(minBitrateKbps > 0);
+        this.codec = audioCodecParameters;
+        maxBitrate = maxBitrateKbps;
+        minBitrate = minBitrateKbps;
     }
 }

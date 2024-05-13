@@ -18,6 +18,7 @@ import org.webrtc.RTCStatsReport;
 import org.webrtc.SessionDescription;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -872,6 +873,20 @@ public final class ConferenceClient implements SignalingChannel.SignalingChannel
     @Override
     public void onLocalDescription(final String id, final SessionDescription localSdp) {
         try {
+//
+//            String desc = localSdp.description;
+//            desc = desc.replaceAll(
+//                    "a=ice-options:google-ice\r\n", "");
+//            String[] split = desc.split("\r\n");
+//            for (int i = 0; i < split.length; i++) {
+//                String s = split[i];
+//                if (s.startsWith("m=audio 9")) {
+//                    split[i] = s + " 63";
+//                }
+//            }
+//            desc = String.join("\r\n", split);
+//
+
             SessionDescription sdp =
                     new SessionDescription(localSdp.type,
                             localSdp.description.replaceAll(

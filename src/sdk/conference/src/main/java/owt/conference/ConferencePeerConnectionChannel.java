@@ -49,6 +49,7 @@ final class ConferencePeerConnectionChannel extends PeerConnectionChannel {
                 videoCodecs.add(param.codec.name);
             }
             videoMaxBitrate = VideoEncodingParameters.maxBitrate;
+            videoMinBitrate = VideoEncodingParameters.minBitrate;
         }
         if (options != null && options.audioEncodingParameters != null
                 && options.audioEncodingParameters.size() != 0) {
@@ -57,6 +58,7 @@ final class ConferencePeerConnectionChannel extends PeerConnectionChannel {
                 audioCodecs.add(param.codec.name);
             }
             audioMaxBitrate = AudioEncodingParameters.maxBitrate;
+            audioMinBitrate = AudioEncodingParameters.minBitrate;
         }
         addStream(GetMediaStream(localStream));
         createOffer();
@@ -104,6 +106,7 @@ final class ConferencePeerConnectionChannel extends PeerConnectionChannel {
 
             if (stream instanceof LocalStream) {
                 setMaxBitrate(stream.id());
+                setMinBitrate(stream.id());
             }
         }
     }

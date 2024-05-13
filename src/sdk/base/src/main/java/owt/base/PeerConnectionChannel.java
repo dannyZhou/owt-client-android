@@ -65,6 +65,7 @@ public abstract class PeerConnectionChannel
     protected List<VideoCodec> videoCodecs;
     protected List<AudioCodec> audioCodecs;
     protected Integer videoMaxBitrate = null, audioMaxBitrate = null;
+    protected Integer videoMinBitrate = null, audioMinBitrate = null;
     protected ArrayList<String> queuedMessage;
     private MediaConstraints sdpConstraints;
     private SessionDescription localSdp;
@@ -404,6 +405,34 @@ public abstract class PeerConnectionChannel
         }
     }
 
+    private void setMinBitrate(RtpSender sender, Integer bitrate) {
+        if (sender == null || bitrate == null || bitrate.intValue() <= 0) {
+            return;
+        }
+        RtpParameters rtpParameters = sender.getParameters();
+        if (rtpParameters == null) {
+            Log.e(LOG_TAG, "Null rtp paramters");
+            return;
+        }
+        for (RtpParameters.Encoding encoding : rtpParameters.encodings) {
+            encoding.minBitrateBps = bitrate * 1000;
+        }
+        if (!sender.setParameters(rtpParameters)) {
+            Log.e(LOG_TAG, "Failed to configure min audio/video bitrate");
+        }
+    }
+
+    protected void setMinBitrate(String mediaStreamId) {
+        DCHECK(peerConnection);
+
+        if (videoRtpSenders.get(mediaStreamId) != null) {
+            setMinBitrate(videoRtpSenders.get(mediaStreamId), videoMinBitrate);
+        }
+        if (audioRtpSenders.get(mediaStreamId) != null) {
+            setMinBitrate(audioRtpSenders.get(mediaStreamId), audioMinBitrate);
+        }
+    }
+
     protected void setMaxBitrate(String mediaStreamId) {
         DCHECK(peerConnection);
 
@@ -471,15 +500,15 @@ public abstract class PeerConnectionChannel
     @Override
     public void onStandardizedIceConnectionChange(PeerConnection.IceConnectionState newState) {
     }
-        
+
     @Override
     public void onConnectionChange(PeerConnection.PeerConnectionState newState) {
     }
-    
+
     @Override
     public void onSelectedCandidatePairChanged(CandidatePairChangeEvent event) {
     }
-        
+
     @Override
     abstract public void onIceConnectionChange(
             PeerConnection.IceConnectionState iceConnectionState);
@@ -493,7 +522,7 @@ public abstract class PeerConnectionChannel
     }
 
     @Override
-    abstract public void onIceCandidate(IceCandidate iceCandidate); 
+    abstract public void onIceCandidate(IceCandidate iceCandidate);
 
     @Override
     abstract public void onIceCandidatesRemoved(IceCandidate[] iceCandidates);
@@ -521,11 +550,11 @@ public abstract class PeerConnectionChannel
     @Override
     public void onAddTrack(RtpReceiver rtpReceiver, MediaStream[] mediaStreams) {
     }
-        
+
     @Override
     public void onTrack(RtpTransceiver transceiver) {
     }
-        
+
     //DataChannel.Observer interface
     @Override
     public void onBufferedAmountChange(long l) {

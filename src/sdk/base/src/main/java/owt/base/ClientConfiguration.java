@@ -16,10 +16,10 @@ public abstract class ClientConfiguration {
     // default RTCConfiguration will contain an empty IceServer list.
     public final RTCConfiguration rtcConfiguration;
 
-    protected ClientConfiguration(RTCConfiguration rtcConf) {
+    protected ClientConfiguration(PeerConnection.RTCConfiguration rtcConf) {
         if (rtcConf == null) {
             rtcConf = new RTCConfiguration(new LinkedList<>());
-            rtcConf.enableDtlsSrtp = true;
+//            rtcConf.enableDtlsSrtp = true;
             rtcConf.continualGatheringPolicy = GATHER_CONTINUALLY;
         }
         rtcConf.sdpSemantics = UNIFIED_PLAN;
