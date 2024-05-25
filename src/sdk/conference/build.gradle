@@ -24,7 +24,8 @@ android {
 }
 
 dependencies {
-    compileOnly files('../../../dependencies/libwebrtc/libwebrtc.jar')
+    compileOnly 'io.github.webrtc-sdk:android:114.5735.11'
+
     compileOnly('io.socket:socket.io-client:1.0.1') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
@@ -39,5 +40,5 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
     androidTestImplementation project(':src:sdk:base')
-    androidTestImplementation files('../../../dependencies/libwebrtc/libwebrtc.jar')
+    androidTestImplementation 'io.github.webrtc-sdk:android:114.5735.11'
 }

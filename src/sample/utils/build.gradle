@@ -25,5 +25,5 @@ android {
 
 dependencies {
     api project(':src:sdk:base')
-    api files('../../../dependencies/libwebrtc/libwebrtc.jar')
+    compileOnly 'io.github.webrtc-sdk:android:114.5735.11'
 }
